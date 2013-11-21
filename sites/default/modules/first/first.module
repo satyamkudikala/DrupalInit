@@ -1,75 +1,75 @@
 <?php
+
 // $Id$
 
 /**
-* Implements hook_help().
-*/
-    function first_help($path, $arg) {
-            if ($path == 'admin/help#first') {
-                    return t('A demonstration module.');
-    }}
-/**
-* Implements hook_block_info().
-*/
-    function first_block_info() {
-
-            $blocks = array();
-            $blocks['list_modules'] = array(
-                                            'info' => t('A listing of all of the enabled modules.'),
-                                            'cache' => DRUPAL_NO_CACHE);
-
-// Created New Block
-            $blocks['Display'] = array(
-                                        'info' => t('Sample Testing My drupal first module'),
-                                        'cache' => DRUPAL_NO_CACHE);
-            return $blocks;
-        }
-
-
-/**
-* Implements hook_block_view().
-*/
-function first_block_view($block_name = '') {
-
-        if ($block_name == 'list_modules') {
-                                $list = module_list();
-                                $theme_args = array('items' => $list, 'type' => 'ol');
-                                $content = theme('item_list', $theme_args);
-
-                    $block = array(
-                                        'subject' => t('Enabled Modules'),
-                                         'content' => $content,
-                                    );
-
-            return $block;
-        }else if($block_name == 'Display'){
-                
-                $list = array('satya' => 'first','test'=>'test','test2'=>'Yes');
-    
-                $theme_args = array('items' => $list, 'type' => 'ul');
-    
-                $content = theme('item_list', $theme_args);//theme_get_registry();
-    
-                //$block = array ('subject' => t('Sample First Test') , 'content' => 'sample Test 111');
-     
-                $block = array ('subject' => t('Sample First Test') , 'content' => $content);
-     
-                return $block;
-        }
-        
-        
-              function first_menu() {
-                  drupal_set_message('Menu Loaded');
-                        $items['hello/%node'] = array(
-                          'page callback' => 'helloworld_page',
-                          'page arguments' => array(1),
-                          );
-
-                return $items;
+ * Implements hook_help().
+ */
+function first_help($path, $arg) {
+    if ($path == 'admin/help#first') {
+        return t('A demonstration module.');
+    }
 }
 
-                function first_page($node) {
-                        return t('Hello node with id !nid', array('!nid' => $node->nid));
-                }                       
-       }
+/**
+ * Implements hook_block_info().
+ */
+function first_block_info() {
 
+    $blocks = array();
+    $blocks['list_modules'] = array(
+        'info' => t('A listing of all of the enabled modules.'),
+        'cache' => DRUPAL_NO_CACHE);
+
+// Created New Block
+    $blocks['Display'] = array(
+        'info' => t('Sample Testing My drupal first module'),
+        'cache' => DRUPAL_NO_CACHE);
+    return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function first_block_view($block_name = '') {
+
+    if ($block_name == 'list_modules') {
+        $list = module_list();
+        $theme_args = array('items' => $list, 'type' => 'ol');
+        $content = theme('item_list', $theme_args);
+
+        $block = array(
+            'subject' => t('Enabled Modules'),
+            'content' => $content,
+        );
+
+        return $block;
+    } else if ($block_name == 'Display') {
+
+        $list = array('satya' => 'first', 'test' => 'test', 'test2' => 'Yes');
+
+        $theme_args = array('items' => $list, 'type' => 'ul');
+
+        $content = theme('item_list', $theme_args); //theme_get_registry();
+        //$block = array ('subject' => t('Sample First Test') , 'content' => 'sample Test 111');
+
+        $block = array('subject' => t('Sample First Test'), 'content' => $content);
+
+        return $block;
+    }
+}
+
+function first_menu() {
+    drupal_set_message('Menu Loaded');
+    $items['hello/%node'] = array(
+        'page callback' => 'helloworld_page',
+        'page arguments' => array(1),
+        'access callback' => TRUE
+    );
+
+    return $items;
+}
+
+function helloworld_page($node) {
+    return t('Hello node with id !nid', array('!nid' => $node->nid));
+}
